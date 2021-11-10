@@ -12,19 +12,19 @@ const {
 const tokens = [
   {
     symbol: "WETH",
-    address: "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
+    address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
   },
   {
     symbol: "DAI",
-    address: "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa"
+    address: "0x6b175474e89094c44da98b954eedeac495271d0f"
   },
   {
     symbol: "LINK",
-    address: "0xa36085F69e2889c224210F603D836748e7dC0088"
+    address: "0x514910771af9ca656af840dff83e8264ecf986ca"
   },
   {
     symbol: "UNI",
-    address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+    address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
   }
 ];
 
@@ -39,7 +39,7 @@ function App() {
   const [ fee, setFee ] = useState();
 
   const [ provider, account, loadWeb3Modal, logoutOfWeb3Modal ] = useWeb3Modal();
-  const chainId = 42;
+  const chainId = 31337;
   const config = useContractConfig();
   const providerAndSigner = useUserProviderAndSigner(provider)
   const contracts = useContractLoader(providerAndSigner.signer, config, chainId);
