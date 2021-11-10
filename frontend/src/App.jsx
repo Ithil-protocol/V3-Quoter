@@ -1,32 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { useContractLoader, useUserProviderAndSigner } from "eth-hooks";
-import useWeb3Modal from "./hooks/useWeb3Modal";
 import useContractConfig from "./hooks/useContractConfig";
 import './App.css';
+import { TokenList } from "./tokens.js";
 
 const {
   abi,
 } = require("@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json");
-
-const tokens = [
-  {
-    symbol: "WETH",
-    address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-  },
-  {
-    symbol: "DAI",
-    address: "0x6b175474e89094c44da98b954eedeac495271d0f"
-  },
-  {
-    symbol: "LINK",
-    address: "0x514910771af9ca656af840dff83e8264ecf986ca"
-  },
-  {
-    symbol: "UNI",
-    address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
-  }
-];
 
 function App() {
   const [ err, setErr ] = useState("");
@@ -38,27 +19,29 @@ function App() {
   const [ destToken, setDestToken ] = useState();
   const [ fee, setFee ] = useState();
 
-  const [ provider, account, loadWeb3Modal, logoutOfWeb3Modal ] = useWeb3Modal();
-  const chainId = 31337;
+  const [ provider, setProvider ] = useState();
+  const chainId = 42;
   const config = useContractConfig();
   const providerAndSigner = useUserProviderAndSigner(provider)
   const contracts = useContractLoader(providerAndSigner.signer, config, chainId);
 
+  const tokens = TokenList.kovan;
   const poolFees = [ 500, 3000, 10000 ];
 
-  useEffect(() => {
-    loadWeb3Modal();
-
-    return () => {
-      logoutOfWeb3Modal();
+  useEffect( () => {
+    const loadProvider = async() => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const userAccount = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setProvider(provider);
     }
+    loadProvider();
   }, []);
 
   const setErrorAlert = (text) => {
     setErr(text);
     setTimeout(() => {
       setErr("");
-   }, 5000);
+   }, 2000);
   }
 
   const setQuoteAlert = (text) => {
@@ -119,7 +102,7 @@ function App() {
     } catch(e) {
       console.error("Error occurred");
       console.error(e);
-      setErrorAlert("MetaMask Provider Error");
+      setErrorAlert("Internal Error");
     }
 
     setLoading(false);
@@ -197,7 +180,7 @@ function App() {
         { err !== "" &&
           <div className="alert alert-danger text-wrap" role="alert">{err}</div>
         }
-        <p className="mt-5 mb-3 text-muted">Made for Unicode Hack - v0.0.3</p>
+        <p className="mt-5 mb-3 text-muted">Made for Unicode Hack - v0.0.4</p>
       </form>
     </main>
   );
