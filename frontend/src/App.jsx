@@ -20,12 +20,12 @@ function App() {
   const [ fee, setFee ] = useState();
 
   const [ provider, setProvider ] = useState();
-  const chainId = 42;
+  const chainId = 31337;
   const config = useContractConfig();
   const providerAndSigner = useUserProviderAndSigner(provider)
   const contracts = useContractLoader(providerAndSigner.signer, config, chainId);
 
-  const tokens = TokenList.kovan;
+  const tokens = TokenList.mainnet;
   const poolFees = [ 500, 3000, 10000 ];
 
   useEffect( () => {

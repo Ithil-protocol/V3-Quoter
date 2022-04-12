@@ -2,26 +2,11 @@
 pragma solidity >=0.8.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/utils/math/Math.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
-import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
-import "@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "./interfaces/IQuoter.sol";
-import "./interfaces/IUniswapV3Quoter.sol";
-import "./libraries/FullMath.sol";
-import "./libraries/TickMath.sol";
-import "./libraries/SafeCast.sol";
-import "./libraries/TickBitmap.sol";
-import "./libraries/SqrtPriceMath.sol";
 import './UniswapV3Quoter.sol';
-import "hardhat/console.sol";
 
 contract Quoter is IQuoter, UniswapV3Quoter {
-    using SafeERC20 for IERC20;
-    using SafeCast for uint256;
 
     IUniswapV3Factory internal uniV3Factory; // TODO should it be immutable?
 
