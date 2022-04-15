@@ -44,7 +44,7 @@ contract Quoter is IQuoter, UniswapV3Quoter {
     ) internal view returns (uint256 amountOut) {
         bool zeroForOne = _fromToken > _toToken;
         // todo: price limit?
-        (int256 amount0, int256 amount1) = quoteSwapExactAmount(_pool, int256(_amount), zeroForOne ? (TickMath.MIN_SQRT_RATIO + 1) : (TickMath.MAX_SQRT_RATIO - 1), zeroForOne);
+        (int256 amount0, int256 amount1) = quoteSwap(_pool, int256(_amount), zeroForOne ? (TickMath.MIN_SQRT_RATIO + 1) : (TickMath.MAX_SQRT_RATIO - 1), zeroForOne);
         if (zeroForOne)
             amountOut = amount1 > 0 ? uint256(amount1) : uint256(-amount1);
         else amountOut = amount0 > 0 ? uint256(amount0) : uint256(-amount0);

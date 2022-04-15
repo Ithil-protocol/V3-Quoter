@@ -6,5 +6,5 @@ pragma solidity >=0.4.0;
 /// @dev Used in SqrtPriceMath.sol
 library FixedPoint96 {
     uint8 internal constant RESOLUTION = 96;
-    uint256 internal constant Q96 = 0x1000000000000000000000000;
+    uint256 internal constant Q96 = 0x1000000000000000000000000; // 2^96
 }
