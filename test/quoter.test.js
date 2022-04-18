@@ -30,8 +30,8 @@ describe("Quoter comparison test", function () {
   this.timeout(60000);
 
   const uniswapQuoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
-  const fromToken = tokens[2];
-  const toToken = tokens[3];
+  const fromToken = tokens[0];
+  const toToken = tokens[2];
 
   it("Should return the same price of Uniswap offchain quoter for the pair " + fromToken.symbol + " -> " + toToken.symbol, async function () {
     const Quoter = await ethers.getContractFactory("Quoter");
@@ -39,7 +39,7 @@ describe("Quoter comparison test", function () {
     await quoter.deployed();
 
     const uniswap = await ethers.getContractAt(abi, uniswapQuoterAddress);
-    const amount = ethers.utils.parseUnits("100.0", 18);
+    const amount = ethers.utils.parseUnits("1000.0", 18);
 
     const expectedAmountToReceive0 =
       await uniswap.callStatic.quoteExactInputSingle(

@@ -16,6 +16,8 @@ import './interfaces/IUniswapV3Quoter.sol';
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import "@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol";
 
+import "hardhat/console.sol";
+
 contract UniswapV3Quoter is IUniswapV3Quoter {
     using LowGasSafeMath for int256;
     using SafeCast for uint256;
@@ -52,7 +54,8 @@ contract UniswapV3Quoter is IUniswapV3Quoter {
                 amountCalculated: 0,
                 sqrtPriceX96: initialPoolState.sqrtPriceX96,
                 tick: initialPoolState.tick,
-                liquidity: 0 // to be modified after initialization
+                liquidity: 0, // to be modified after initialization
+                iteration: 0
             });
     }
 
@@ -156,10 +159,14 @@ contract UniswapV3Quoter is IUniswapV3Quoter {
 
         (SwapState memory state, uint128 liquidity, uint160 sqrtPriceX96) = 
             setInitialState(initialPoolState, amountSpecified, sqrtPriceLimitX96, zeroForOne);
-
-        while (state.amountSpecifiedRemaining != 0 && sqrtPriceX96 != sqrtPriceLimitX96) 
+            
+        while (state.amountSpecifiedRemaining != 0 && sqrtPriceX96 != sqrtPriceLimitX96) {
             (sqrtPriceNextX96, sqrtPriceX96, liquidity) = 
                 processSwapWithinTick(IUniswapV3Pool(poolAddress), initialPoolState, state, sqrtPriceX96, liquidity, sqrtPriceLimitX96, zeroForOne, exactAmount);
+            state.iteration++;
+        }
+                
+        console.log("[UniswapV3Quoter.sol]\\quoteSwap: number of iterations", state.iteration);
 
         (amount0, amount1) = returnedAmount(state, amountSpecified, zeroForOne);
     }
