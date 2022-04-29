@@ -14,6 +14,8 @@ contract Quoter is IQuoter, UniswapV3Quoter {
         uniV3Factory = IUniswapV3Factory(_uniV3Factory);
     }
 
+    // This should be equal to quoteExactInputSingle(_fromToken, _toToken, _poolFee, _amount, 0)
+    // todo: add price limit
     function estimateMaxSwapUniswapV3(
         address _fromToken,
         address _toToken,
@@ -25,6 +27,8 @@ contract Quoter is IQuoter, UniswapV3Quoter {
         return _estimateOutputSingle(_toToken, _fromToken, _amount, pool);
     }
 
+    // This should be equal to quoteExactOutputSingle(_fromToken, _toToken, _poolFee, _amount, 0)
+    // todo: add price limit
     function estimateMinSwapUniswapV3(
         address _fromToken,
         address _toToken,
@@ -33,9 +37,10 @@ contract Quoter is IQuoter, UniswapV3Quoter {
     ) public view override returns (uint256) {
         address pool = uniV3Factory.getPool(_fromToken, _toToken, _poolFee);
 
-        return _estimateInputSingle(_toToken, _fromToken, _amount, pool);
+        return _estimateInputSingle(_fromToken, _toToken, _amount, pool);
     }
 
+    // todo: add price limit
     function _estimateOutputSingle(
         address _fromToken,
         address _toToken,
@@ -50,6 +55,7 @@ contract Quoter is IQuoter, UniswapV3Quoter {
         else amountOut = amount0 > 0 ? uint256(amount0) : uint256(-amount0);
     }
 
+    // todo: add price limit
     function _estimateInputSingle(
         address _fromToken,
         address _toToken,
