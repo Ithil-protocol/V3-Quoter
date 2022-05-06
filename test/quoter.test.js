@@ -53,14 +53,14 @@ describe("Quoter comparison test", function () {
 
     const uniswap = await ethers.getContractAt(abi, uniswapQuoterAddress);
     console.log("Uniswap")
-    const amount1 = BigNumber.from(100000000)
+    const amount = BigNumber.from(100000000)
 
     const expectedAmountToReceive0 =
       await uniswap.callStatic.quoteExactInputSingle(
         fromToken.address,
         toToken.address,
         3000,
-        amount1,
+        amount,
         0
       );
 

@@ -37,7 +37,6 @@ interface IUniswapV3Quoter {
         int24 tick;
         // the current liquidity in range
         uint128 liquidity;
-        uint256 iteration;
     }
 
     struct StepComputations {
