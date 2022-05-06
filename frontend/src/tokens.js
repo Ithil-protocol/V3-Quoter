@@ -15,6 +15,10 @@ export const TokenList = {
     {
       symbol: "UNI",
       address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+    },
+    {
+      symbol: "SHIB",
+      address: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
     }
   ],
   mainnet: [
@@ -33,6 +37,10 @@ export const TokenList = {
     {
       symbol: "UNI",
       address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+    },
+    {
+      symbol: "SHIB",
+      address: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
     }
   ]
 };
